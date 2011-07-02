@@ -33,8 +33,10 @@
       </p>
 
       <%= answer.body %>
-    </div>
 
+    </div>
+    <%= link_to 'Report Abuse', '#', :onclick => "$('#report_abuse_form').slideDown()" %>
+    <%= render 'report_abuse' %>
     <%= clearfix %>
   </div>
 <% end %>
@@ -44,3 +46,4 @@
     <%= render "answers/form", question: @question, answer: Answer.new %>
   </div>
 <% end %>
+

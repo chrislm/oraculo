@@ -1,0 +1,11 @@
+<%= form_tag(report_abuse_answer_path(@question), :id => 'report_abuse_form', :style => 'display:none', :remote => true) do %>
+  <div class="field">
+    <%= label_tag :text, 'Message to report' %> <br />
+    <%= text_field_tag :text %>
+  </div>
+  <div class="actions">
+    <%= submit_tag 'Send' %> <br />
+    <%= link_to 'Cancel', '#', :onclick => "$('#report_abuse_form').slideUp()" %>
+  </div>
+<% end %>
+
