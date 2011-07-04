@@ -38,11 +38,5 @@ class QuestionsController < ApplicationController
     @question.destroy
     respond_with(@question)
   end
-
-  def report_abuse
-    ReportMailer.notification( params[:text]).deliver
-    @question = Question.find(params[:id])
-    redirect_to @question, :notice => 'asdfasdfsd'
-  end
 end
 

@@ -19,27 +19,54 @@
   <%= clearfix %>
 </div>
 
-<% @question.answers.each do |answer| %>
-  <div class="message">
 
-    <div id="messageOwner">
-      <%= image_tag "avatar.png" %>
+<div class="answersAll">
+
+  <% @question.answers.each do |answer| %>
+    <div class="message">
+
+      <div id="messageOwner">
+        <%= image_tag "avatar.png" %>
+      </div>
+
+      <div id="messageBody">
+        <p class="metadata">
+          <span class="owner"><%= answer.owner.name %></span>
+          <span class="time"><%= time_ago_in_words answer.created_at %></span>
+        </p>
+
+        <%= answer.body %>
+
+        <div class="reportAbuse" onclick="$('#report_abuse_form_<%= answer.id %>').slideDown()">
+          Report Abuse
+        </div>
+
+      </div>
+
+      <br clear="all" />
+
+      <!-- formulário de envio (não conseguir criá-lo à partir do _report_abuse.html.erb) -->
+      <%= form_tag(report_abuse_answer_path(@answer), :id => 'report_abuse_form_'+answer.id.to_s()+'', :style => 'display:none', :remote => false) do %>
+        <div class="field">
+          <input type="hidden" name="answer_id" value="<%= answer.id %>" />
+          <%= label_tag :text, 'Message to report' %> <br />
+          <%= text_field_tag :text %>
+        </div>
+        <div class="actions">
+          <%= submit_tag 'Send' %>
+          <span class="reportAbuse" onclick="$('#report_abuse_form_<%= answer.id %>').slideUp()">
+            Cancel
+          </span>
+        </div>
+      <% end %>
+      <!-- formulário de envio -->
+
+
+      <%= clearfix %>
     </div>
+  <% end %>
 
-    <div id="messageBody">
-      <p class="metadata">
-        <span class="owner"><%= answer.owner.name %></span>
-        <span class="time"><%= time_ago_in_words answer.created_at %></span>
-      </p>
-
-      <%= answer.body %>
-
-    </div>
-    <%= link_to 'Report Abuse', '#', :onclick => "$('#report_abuse_form').slideDown()" %>
-    <%= render 'report_abuse' %>
-    <%= clearfix %>
-  </div>
-<% end %>
+</div>
 
 <% if signed_in? %>
   <div class="answerForm">

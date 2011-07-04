@@ -4,10 +4,6 @@ class Answer < ActiveRecord::Base
 
   validates_presence_of :owner, :question, :body
   validates_associated :owner, :question
-  #after_save :report
-  #def report
-    #puts "asdfasdf"
-    #MessengerMailer.notification(self).deliver
-  #end
+
 end
 

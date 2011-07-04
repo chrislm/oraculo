@@ -9,10 +9,13 @@ class AnswersController < ApplicationController
     respond_with(@answer, location: @answer.question)
   end
 
-  def report_abuse
-   # @question = Question.find(params[:id])
-    ReportMailer.notification(self).deliver
-    #redirect_to @question, :notice => "Sucessefully sent a message to Administration"
+
+   def report_abuse
+    @answer = Answer.find(params[:answer_id])
+    ReportMailer.notification(@answer, params[:text]).deliver
+    flash[:notice] = "Sucessefully sent a message to Administration"
+    redirect_to :back
   end
+
 end
 
